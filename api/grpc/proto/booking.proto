@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package booking;
+
+option go_package = "concert-ticket-api/api/grpc/proto";
+
+import "google/protobuf/timestamp.proto";
+import "api/grpc/proto/common.proto";
+
+service BookingService {
+  rpc GetBooking(GetBookingRequest) returns (Booking);
+  rpc GetUserBookings(GetUserBookingsRequest) returns (GetUserBookingsResponse);
+  rpc BookTickets(BookTicketsRequest) returns (Booking);
+  rpc CancelBooking(CancelBookingRequest) returns (CancelBookingResponse);
+}
+
+message GetBookingRequest {
+  int64 id = 1;
+}
+
+message GetUserBookingsRequest {
+  string user_id = 1;
+  int32 page = 2;
+  int32 page_size = 3;
+}
+
+message GetUserBookingsResponse {
+  repeated Booking bookings = 1;
+  common.PaginationMeta meta = 2;
+}
+
+message BookTicketsRequest {
+  int64 concert_id = 1;
+  string user_id = 2;
+  int32 ticket_count = 3;
+}
+
+message CancelBookingRequest {
+  int64 id = 1;
+  string user_id = 2;
+}
+
+message CancelBookingResponse {
+  string message = 1;
+}
+
+message Booking {
+  int64 id = 1;
+  int64 concert_id = 2;
+  string user_id = 3;
+  int32 ticket_count = 4;
+  google.protobuf.Timestamp booking_time = 5;
+  string status = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+}

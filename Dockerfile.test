@@ -1,0 +1,20 @@
+FROM golang:1.23-alpine
+
+# Install required packages
+RUN apk add --no-cache git gcc musl-dev
+
+# Set working directory
+WORKDIR /app
+
+# Copy go.mod and go.sum files first to leverage Docker cache
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy the source code
+COPY . .
+
+# Build the application for test
+RUN go build -o load-test ./test/load/
+
+# Set entry point for running the load test
+ENTRYPOINT ["/app/load-test"]

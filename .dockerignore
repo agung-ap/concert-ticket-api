@@ -1,0 +1,45 @@
+# Git files
+.git
+.gitignore
+
+# Build artifacts
+bin/
+dist/
+build/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test files
+*_test.go
+test/
+coverage.txt
+*.test
+*.out
+
+# Go debugging files
+__debug_bin
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Docker files
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# Documentation
+README.md
+LICENSE
+docs/
+
+# Miscellaneous
+.env
+*.log
+tmp/

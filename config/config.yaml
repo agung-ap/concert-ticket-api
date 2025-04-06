@@ -1,0 +1,11 @@
+log_level: info
+rest_port: 8080
+grpc_port: 50051
+max_retries: 3
+database:
+  host: localhost
+  port: 5432
+  username: postgres
+  password: postgres
+  name: concert_tickets
+  sslmode: disable

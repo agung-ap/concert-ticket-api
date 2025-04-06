@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package concert;
+
+option go_package = "concert-ticket-api/api/grpc/proto";
+
+import "google/protobuf/timestamp.proto";
+import "api/grpc/proto/common.proto";
+
+service ConcertService {
+  rpc GetConcert(GetConcertRequest) returns (Concert);
+  rpc ListConcerts(ListConcertsRequest) returns (ListConcertsResponse);
+  rpc CreateConcert(CreateConcertRequest) returns (Concert);
+  rpc UpdateConcert(UpdateConcertRequest) returns (Concert);
+}
+
+message GetConcertRequest {
+  int64 id = 1;
+}
+
+message ListConcertsRequest {
+  int32 page = 1;
+  int32 page_size = 2;
+  string artist = 3;
+  string venue = 4;
+  string name = 5;
+  google.protobuf.Timestamp date_from = 6;
+  google.protobuf.Timestamp date_to = 7;
+  bool available_only = 8;
+}
+
+message ListConcertsResponse {
+  repeated Concert concerts = 1;
+  common.PaginationMeta meta = 2;
+}
+
+message CreateConcertRequest {
+  string name = 1;
+  string artist = 2;
+  string venue = 3;
+  google.protobuf.Timestamp concert_date = 4;
+  int32 total_tickets = 5;
+  double price = 6;
+  google.protobuf.Timestamp booking_start_time = 7;
+  google.protobuf.Timestamp booking_end_time = 8;
+}
+
+message UpdateConcertRequest {
+  int64 id = 1;
+  string name = 2;
+  string artist = 3;
+  string venue = 4;
+  google.protobuf.Timestamp concert_date = 5;
+  int32 total_tickets = 6;
+  double price = 7;
+  google.protobuf.Timestamp booking_start_time = 8;
+  google.protobuf.Timestamp booking_end_time = 9;
+  int32 version = 10;
+}
+
+message Concert {
+  int64 id = 1;
+  string name = 2;
+  string artist = 3;
+  string venue = 4;
+  google.protobuf.Timestamp concert_date = 5;
+  int32 total_tickets = 6;
+  int32 available_tickets = 7;
+  double price = 8;
+  google.protobuf.Timestamp booking_start_time = 9;
+  google.protobuf.Timestamp booking_end_time = 10;
+  int32 version = 11;
+  google.protobuf.Timestamp created_at = 12;
+  google.protobuf.Timestamp updated_at = 13;
+}

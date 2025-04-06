@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: concert-ticket-api
+    ports:
+      - "8080:8080"   # REST API
+      - "50051:50051" # gRPC
+    environment:
+      - APP_DATABASE_HOST=db
+      - APP_DATABASE_PORT=5432
+      - APP_DATABASE_USERNAME=postgres
+      - APP_DATABASE_PASSWORD=postgres
+      - APP_DATABASE_NAME=concert_tickets
+      - APP_DATABASE_SSLMODE=disable
+      - APP_LOG_LEVEL=info
+      - APP_REST_PORT=8080
+      - APP_GRPC_PORT=50051
+      - APP_MAX_RETRIES=3
+    depends_on:
+      - db
+    restart: unless-stopped
+    networks:
+      - concert-network
+
+  db:
+    image: postgres:14-alpine
+    container_name: concert-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=concert_tickets
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - concert-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  concert-network:
+    driver: bridge
+
+volumes:
+  postgres-data:
