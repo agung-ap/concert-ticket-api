@@ -23,8 +23,6 @@ __debug_bin
 .DS_Store
 
 # Documentation
-README.md
-LICENSE
 docs/
 
 # Miscellaneous
