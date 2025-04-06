@@ -1,0 +1,33 @@
+# Git files
+.git
+.gitignore
+
+# Build artifacts
+bin/
+dist/
+build/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go debugging files
+__debug_bin
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Documentation
+README.md
+LICENSE
+docs/
+
+# Miscellaneous
+.env
+*.log
+tmp/
